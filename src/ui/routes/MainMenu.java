@@ -2,6 +2,9 @@ package ui.routes;
 
 import java.util.Map;
 
+import rammanagementsystem.exceptions.InvalidItemException;
+import rammanagementsystem.services.DataServiceProvider;
+import rammanagementsystem.utilities.DataUtils;
 import ui.Router;
 import utils.constants.StringConstants;
 
@@ -39,12 +42,19 @@ public class MainMenu extends Route {
                     router.navigate(new Search(router, this));
                     break;
                 case 2:
-                    router.navigate(new ProductDeleteQuery(router, this));
-                    break;
-                case 3:
                     router.navigate(new UpdateQuery(router, this));
                     break;
+                case 3:
+                    router.navigate(new ProductDeleteQuery(router, this));
+                    break;
                 case 4:
+                    try {
+                        DataServiceProvider.ramItemsDataService.addAll(DataUtils.generateRandomRamItems(50));
+                    } catch (InvalidItemException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 5:
                     System.exit(0);
                     break;
             }

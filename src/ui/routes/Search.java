@@ -3,14 +3,16 @@ package ui.routes;
 import rammanagementsystem.exceptions.InvalidFormatException;
 
 import rammanagementsystem.models.RamItem;
+import rammanagementsystem.models.enums.SearchType;
 import rammanagementsystem.services.DataService;
 import rammanagementsystem.services.DataServiceProvider;
 
 import rammanagementsystem.utilities.Constants;
 
 import ui.Router;
+import ui.components.forms.EnumSelectorFormField;
 import ui.components.forms.Form;
-import ui.components.forms.FormField;
+
 import ui.components.forms.InputFormField;
 import utils.RouteDescriptor;
 import utils.constants.StringConstants;
@@ -21,13 +23,11 @@ import java.util.ArrayList;
 public class Search extends Form<RamItem> {
 
     private int currentPage = 0;
-    // Currently a stub, will figure out how to improve using generics later.
     private DataService<RamItem> dataService = DataServiceProvider.ramItemsDataService;
-    protected List<RamItem> dataList = new ArrayList<RamItem>(dataService.values());
+    protected List<RamItem> dataList = new ArrayList<RamItem>();
 
     public Search(Router router, Route prevRoute) {
         super(StringConstants.ROUTE_DESCRIPTOR.get((short) 3), router, prevRoute);
-        // TODO Auto-generated constructor stub
     }
 
     public Search(RouteDescriptor rd, Router router, Route prevRoute) {
@@ -59,7 +59,23 @@ public class Search extends Form<RamItem> {
         }
         if (this.isEditing) {
             this.dataList.clear();
-            this.dataList.addAll(this.dataService.queryMap((String) fields.get(0).getValue()).values());
+            StringBuilder queryString = new StringBuilder();
+            switch ((SearchType) this.fields.get(1).getValue()) {
+                case BUS_SPEED:
+                    queryString.append("busSpeed=");
+                    break;
+                case BRAND:
+                    queryString.append("brand=");
+                    break;
+                case TYPE:
+                    queryString.append("type=");
+                    break;
+                case GENERAL:
+                    queryString.append("");
+            }
+            queryString.append(this.fields.get(0).getValue());
+            Router.setMotd(queryString.toString());
+            this.dataList.addAll(this.dataService.queryMap(queryString.toString()).values());
         }
     }
 
@@ -69,7 +85,10 @@ public class Search extends Form<RamItem> {
         this.setAcceptMessage("Back");
 
         this.fields.add(new InputFormField(
-                "Query: ", ""));
+                "Query:", ""));
+
+        this.fields.add(new EnumSelectorFormField<>("Search by", SearchType.GENERAL));
+
     }
 
     @Override
@@ -97,7 +116,7 @@ public class Search extends Form<RamItem> {
             return sb.toString();
         }
         if (dataList.size() == 0) {
-            sb.append("Product not found");
+            sb.append("No products found.");
             return sb.toString();
         }
 

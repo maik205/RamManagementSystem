@@ -19,6 +19,7 @@ public class RecursiveForm extends Form {
     @Override
     public void submitForm() {
         if (prevRoute instanceof Form) {
+            ((Form) prevRoute).clearFields();
             ((Form) prevRoute).initializeForm();
             router.navigate(prevRoute);
         }

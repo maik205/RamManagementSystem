@@ -23,7 +23,7 @@ public abstract class ProductQueryActionForm extends Search {
     @Override
     public RamItem parseForm() throws InvalidFormatException {
         try {
-            RamItem prod = DataServiceProvider.ramItemsDataService.get(this.fields.get(1).getValue());
+            RamItem prod = DataServiceProvider.ramItemsDataService.get(this.fields.get(2).getValue());
             if (prod == null)
                 throw new InvalidFormatException();
             return prod;
@@ -40,7 +40,7 @@ public abstract class ProductQueryActionForm extends Search {
         this.fields.add(
                 new InputFormField("ID", ""));
         this.fields.get(1).setValidators(
-                new LinkValidator<>(fields.get(1), DataServiceProvider.ramItemsDataService));
+                new LinkValidator<RamItem>((FormField<String>) fields.get(2), DataServiceProvider.ramItemsDataService));
     }
 
 }

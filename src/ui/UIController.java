@@ -1,5 +1,6 @@
 package ui;
 
+import rammanagementsystem.services.DataServiceProvider;
 import ui.routes.MainMenu;
 import utils.Utils;
 
@@ -21,6 +22,7 @@ public class UIController {
      */
     public void start() {
         router.navigate(new MainMenu(router));
+        DataServiceProvider.ramItemsDataService.selfTest();
         cycle();
         while (true) {
             if (kbHit()) {

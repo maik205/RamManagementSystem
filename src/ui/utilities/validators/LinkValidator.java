@@ -8,7 +8,7 @@ import ui.utilities.FieldValidator;
 public class LinkValidator<T extends Queriable> extends FieldValidator {
     private DataService<T> linkData;
 
-    public LinkValidator(FormField field, DataService<T> linkData) {
+    public LinkValidator(FormField<String> field, DataService<T> linkData) {
         super(field);
         this.linkData = linkData;
     }

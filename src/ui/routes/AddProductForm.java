@@ -14,7 +14,6 @@ public class AddProductForm extends ProductForm {
 
     @Override
     protected String provideUID() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException();
     }
 
@@ -31,7 +30,7 @@ public class AddProductForm extends ProductForm {
                     router,
                     this));
         } catch (InvalidFormatException e) {
-            Router.setMotd("Invalid format. Please try again.");
+            Router.setMotd("Invalid format. Please try again." + e.getMessage());
         } catch (InvalidItemException e) {
             Router.setMotd(e.getMessage());
         }

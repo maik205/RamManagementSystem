@@ -15,20 +15,16 @@ public class InputFormFieldRenderingStrategy implements FormFieldValueRenderingS
         StringBuilder sb = new StringBuilder();
         List<String> splitStrings = StringUtils.splitLongString(formField.getValue());
 
-        // System.out.println(splitStrings[0]);
         String valueColor = formField.getEditing() ? "black" : "white";
         String valueBackground = formField.getEditing() ? "white" : "black";
 
         for (int i = 0; i < splitStrings.size(); i++) {
             sb.append(StringUtils.getLabelPadding(i == 0 ? formField.getLabel() : ""));
-            try {
-                sb.append(
-                        Colorizer.colorize(formField.getValue().length() == 0 ? "<Empty>" : splitStrings.get(i),
-                                valueColor,
-                                valueBackground));
-            } catch (InvalidColorException e) {
-                e.printStackTrace();
-            }
+            sb.append(
+                    Colorizer.colorize(formField.getValue().length() == 0 ? "<Empty>" : splitStrings.get(i),
+                            valueColor,
+                            valueBackground));
+
             if (i < splitStrings.size() - 1) {
                 sb.append("\n");
             }

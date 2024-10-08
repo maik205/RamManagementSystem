@@ -54,7 +54,7 @@ public abstract class FormField<T> implements Observer<Character> {
     }
 
     public boolean isValid() {
-        if (this.value == null)
+        if (this.value == null || this.value.equals(""))
             return false;
         for (FieldValidator fv : validators) {
             if (!fv.validatorFunction())
@@ -64,33 +64,26 @@ public abstract class FormField<T> implements Observer<Character> {
     }
 
     public String renderTitleString() {
-        try {
-            StringBuilder result = new StringBuilder();
-            String labelColor = isSelecting ? "black" : "white";
-            String labelBackground = isSelecting ? (isEditing ? "yellow" : "white") : "black";
-            result.append(Colorizer.colorize(this.label, labelColor, labelBackground));
-            return result.toString();
-        } catch (Exception e) {
-            return "Bro you messed up the colors";
-        }
+        StringBuilder result = new StringBuilder();
+        String labelColor = isSelecting ? "black" : "white";
+        String labelBackground = isSelecting ? (isEditing ? "yellow" : "white") : "black";
+        result.append(Colorizer.colorize(this.label, labelColor, labelBackground));
+        return result.toString();
+
     }
 
     public abstract String renderValueString();
 
     @Override
     public String toString() {
-        try {
-            StringBuilder result = new StringBuilder();
-            result.append(this.renderTitleString());
-            result.append(this.renderValueString());
-            for (FieldValidator validator : validators) {
-                if (!validator.validatorFunction()) {
-                    result.append('\n' + Colorizer.colorize(validator.getErrorMessage(), "red"));
-                }
+        StringBuilder result = new StringBuilder();
+        result.append(this.renderTitleString());
+        result.append(this.renderValueString());
+        for (FieldValidator validator : validators) {
+            if (!validator.validatorFunction()) {
+                result.append('\n' + Colorizer.colorize(validator.getErrorMessage(), "red"));
             }
-            return result.toString();
-        } catch (Exception e) {
-            return "Bro you messed up the colors";
         }
+        return result.toString();
     }
 }

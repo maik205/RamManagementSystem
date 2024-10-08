@@ -1,4 +1,4 @@
-package rammanagementsystem.models;
+package rammanagementsystem.models.enums;
 
 /**
  * Enum for the type of RAM available

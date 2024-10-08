@@ -63,10 +63,14 @@ public class Colorizer {
      * @return Colorized text with ANSI color codes
      * @throws InvalidColorException If the color or background is invalid
      */
-    public static String colorize(String text, String color, String background) throws InvalidColorException {
+    public static String colorize(String text, String color, String background) {
         if (backgroundMap.containsKey(background)) {
             return backgroundMap.get(background) + colorize(text, color);
         } else
-            throw new InvalidColorException();
+            try {
+                throw new InvalidColorException();
+            } catch (InvalidColorException e) {
+                return text;
+            }
     }
 }

@@ -7,7 +7,7 @@ import rammanagementsystem.exceptions.InvalidFormatException;
 import rammanagementsystem.interfaces.Queriable;
 import ui.Router;
 import ui.UIController;
-import ui.exceptions.InvalidColorException;
+
 import ui.routes.Route;
 import ui.utilities.Colorizer;
 
@@ -52,6 +52,7 @@ public abstract class Form<T extends Queriable> extends Route {
                 this.unsubscribe(this.fields.get(currentSelectedFieldIndex));
             } else {
                 UIController.input.clearBuffer();
+                UIController.input.setBuffer(this.fields.get(currentSelectedFieldIndex).getValue().toString());
                 this.subscribe(this.fields.get(currentSelectedFieldIndex));
             }
             this.isEditing = !this.isEditing;
@@ -92,11 +93,7 @@ public abstract class Form<T extends Queriable> extends Route {
 
     private String renderOption(String message, int index) {
         boolean isSelected = index == currentSelectedFieldIndex;
-        try {
-            return Colorizer.colorize(message, isSelected ? "black" : "white", isSelected ? "white" : "black") + "\n";
-        } catch (InvalidColorException e) {
-            return message;
-        }
+        return Colorizer.colorize(message, isSelected ? "black" : "white", isSelected ? "white" : "black") + "\n";
 
     }
 
@@ -124,4 +121,8 @@ public abstract class Form<T extends Queriable> extends Route {
      */
 
     public abstract void cancelForm();
+
+    public void clearFields(){
+        this.fields.clear();
+    }
 }

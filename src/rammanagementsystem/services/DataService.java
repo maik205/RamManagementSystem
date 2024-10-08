@@ -26,10 +26,16 @@ public abstract class DataService<T extends Queriable> extends HashMap<String, T
         this.put(item.getId(), item);
     }
 
+    public void addAll(Collection<T> items) throws InvalidItemException {
+        for (T item : items) {
+            addItem(item);
+        }
+    }
+
     public HashMap<String, T> queryMap(String str) {
         HashMap<String, T> workingMap = new HashMap<>();
         this.forEach((key, value) -> {
-            if (value.getQueryString().toLowerCase().contains(str.toLowerCase()))
+            if (value.getQueryString().toLowerCase().contains(str.toLowerCase()) && value.isActive())
                 workingMap.put(key, value);
         });
         return workingMap;

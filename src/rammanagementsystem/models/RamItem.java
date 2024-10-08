@@ -2,6 +2,8 @@
 package rammanagementsystem.models;
 
 import rammanagementsystem.interfaces.Queriable;
+import rammanagementsystem.models.enums.RamType;
+
 import java.io.Serializable;
 import java.time.YearMonth;
 
@@ -17,6 +19,16 @@ public class RamItem implements Queriable, Serializable, Cloneable {
     private YearMonth productionMonthYear;
     private boolean isActive;
 
+    /**
+     * 
+     * @param productId           the product id
+     * @param type                the type of ram
+     * @param busSpeed            the bus speed in mhz
+     * @param brand               the brand of the ram
+     * @param quantity            the quantity of the ram
+     * @param productionMonthYear the production month year in YearMonth format
+     * @param isActive            if the item is active
+     */
     public RamItem(String productId, RamType type, int busSpeed, String brand, int quantity,
             YearMonth productionMonthYear,
             boolean isActive) {
@@ -27,6 +39,9 @@ public class RamItem implements Queriable, Serializable, Cloneable {
         this.quantity = quantity;
         this.productionMonthYear = productionMonthYear;
         this.isActive = isActive;
+    }
+
+    public RamItem() {
     }
 
     @Override
@@ -50,6 +65,12 @@ public class RamItem implements Queriable, Serializable, Cloneable {
                 ", productionMonthYear=" + productionMonthYear
                 + ", isActive=" + isActive
                 + "]";
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %s, %s, %s", productId, type, busSpeed, brand, quantity,
+                productionMonthYear);
     }
 
     /**

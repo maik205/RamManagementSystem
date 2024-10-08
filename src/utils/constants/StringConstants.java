@@ -13,7 +13,8 @@ public final class StringConstants {
         MAIN_MENU.put((short) 1, "View & search items");
         MAIN_MENU.put((short) 2, "Update a product");
         MAIN_MENU.put((short) 3, "Deactivate an item");
-        MAIN_MENU.put((short) 4, "Exit");
+        MAIN_MENU.put((short) 4, "Generate random data");
+        MAIN_MENU.put((short) 5, "Exit");
 
         ROUTE_DESCRIPTOR.put((short) 0, new RouteDescriptor("Main Menu", "Press W or S to navigate the options and Enter to select an option"));
         ROUTE_DESCRIPTOR.put((short) 1, new RouteDescriptor("Add a product", "Press Enter to to toggle inputting for the field that is highlighted in white."));
